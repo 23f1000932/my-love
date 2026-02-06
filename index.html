@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Be My Valentine? ❤️</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -12,6 +12,7 @@
             --pink-deep: #ff69b4;
             --pastel-bg: #fff0f5;
             --white: #ffffff;
+            --shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
         }
 
         * {
@@ -19,15 +20,18 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         body {
             background-color: var(--pastel-bg);
             overflow-x: hidden;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         /* --- Loading Screen --- */
@@ -39,19 +43,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 2000;
             transition: opacity 0.8s ease;
         }
 
         .heart-loader {
-            font-size: 50px;
+            font-size: 60px;
             animation: pulse 1s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         /* --- Background Animation --- */
@@ -68,151 +71,194 @@
         .floating-heart {
             position: absolute;
             color: var(--pink-soft);
-            opacity: 0.6;
-            animation: float Up 6s linear forwards;
+            opacity: 0.5;
+            animation: floatUp linear forwards;
+            will-change: transform;
         }
 
         @keyframes floatUp {
-            to {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+            from { transform: translateY(110vh) rotate(0deg); }
+            to { transform: translateY(-20vh) rotate(360deg); }
         }
 
         /* --- Main Card --- */
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
-            max-width: 90%;
-            width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 25px;
+            border-radius: 35px;
+            box-shadow: var(--shadow);
+            max-width: 450px;
+            width: 100%;
             z-index: 10;
-            transition: all 0.5s ease;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            backdrop-filter: blur(5px);
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--pink-deep);
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: clamp(1.8rem, 8vw, 2.5rem);
+            margin-bottom: 15px;
+        }
+
+        p.subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 25px;
         }
 
         .btn-container {
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             position: relative;
-            min-height: 60px;
+            min-height: 80px;
+            align-items: center;
         }
 
         .btn {
-            padding: 12px 35px;
+            padding: 14px 30px;
             border: none;
             border-radius: 50px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
-            display: flex;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
         }
 
         .btn-yes {
             background-color: var(--pink-deep);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
-        }
-
-        .btn-yes:hover {
-            transform: scale(1.1);
-            background-color: #ff1493;
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+            z-index: 5;
         }
 
         .btn-no {
-            background-color: #eee;
-            color: #666;
-            position: relative;
+            background-color: #f0f0f0;
+            color: #888;
+            border: 1px solid #ddd;
         }
 
         /* --- Gifts Section --- */
         #gifts-section {
             display: none;
             width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 900px;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 20px 10px;
         }
 
         .gift-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             width: 100%;
+            margin-top: 20px;
+        }
+
+        /* --- Interactive Gift Box --- */
+        .gift-box-wrapper {
+            perspective: 1000px;
+            cursor: pointer;
         }
 
         .gift-card {
             background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
             text-align: center;
-            transition: transform 0.3s;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            position: relative;
         }
 
-        .gift-card:hover {
-            transform: translateY(-5px);
+        /* Closed State */
+        .gift-card.closed .content {
+            display: none;
+        }
+
+        .gift-card.closed::before {
+            content: '🎁';
+            font-size: 80px;
+            animation: wobble 2s infinite;
+            display: block;
+        }
+
+        .gift-card.closed::after {
+            content: 'Click to Open!';
+            margin-top: 20px;
+            color: var(--pink-deep);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        /* Opened State */
+        .gift-card.opened {
+            transform: rotateY(0deg) scale(1);
+            animation: popOpen 0.5s ease-out;
+        }
+
+        @keyframes popOpen {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .gift-card h3 {
             color: var(--pink-deep);
             margin-bottom: 15px;
             font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
         }
 
-        /* Poem Typing Effect */
+        /* Gift Content Details */
         #poem-text {
             font-style: italic;
-            line-height: 1.6;
-            min-height: 100px;
+            line-height: 1.8;
+            color: #444;
+            font-size: 0.95rem;
         }
 
-        /* Slider */
         .slider {
-            position: relative;
             width: 100%;
-            height: 200px;
-            overflow: hidden;
+            height: 180px;
             border-radius: 15px;
-            margin-top: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+            background: #f9f9f9;
         }
 
         .slides {
             display: flex;
-            width: 300%;
             height: 100%;
             transition: transform 0.5s ease;
         }
 
         .slide {
-            width: 100%;
-            height: 100%;
+            min-width: 100%;
             background-size: cover;
             background-position: center;
-            background-color: #fce4ec;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 0.8rem;
         }
 
-        /* Music Toggle */
+        /* Utilities */
         .music-control {
             position: fixed;
             bottom: 20px;
@@ -224,278 +270,275 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 20px;
             cursor: pointer;
-            z-index: 100;
-        }
-
-        /* Responsive Utilities */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .container { padding: 25px; }
-            .btn { padding: 10px 25px; font-size: 1rem; }
         }
 
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 1s forwards; }
+        .fade-in { animation: fadeIn 0.8s forwards; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Kisses Container */
-        #kisses-container {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 99;
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            body { padding: 15px; }
+            .container { padding: 30px 20px; }
+            .gift-grid { grid-template-columns: 1fr; }
+            .btn { width: 120px; padding: 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Audio Element (Add your mp3 link here) -->
     <audio id="bg-music" loop>
         <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-Music.mp3" type="audio/mpeg">
     </audio>
 
     <div id="loading-screen">
         <div class="heart-loader">💖</div>
-        <p style="margin-top: 10px; color: var(--pink-deep);">Preparing something special...</p>
+        <p style="margin-top: 15px; color: var(--pink-deep); font-weight: 500;">Creating magic...</p>
     </div>
 
     <div class="bg-hearts" id="bg-hearts"></div>
-    <div id="kisses-container"></div>
 
-    <!-- Main Section -->
+    <!-- Main Question Section -->
     <div class="container" id="main-container">
-        <h1>Hey [Her Name] ❤️</h1>
-        <p style="color: #666; font-size: 1.1rem;">I have a very important question to ask you...</p>
-        <h2 style="margin-top: 15px; color: var(--pink-deep); font-family: 'Pacifico';">Will you be my Valentine?</h2>
+        <h1 id="valentine-title">Hey [Name] ❤️</h1>
+        <p class="subtitle">I've been thinking about this for a while...</p>
+        <h2 style="color: var(--pink-deep); font-family: 'Pacifico'; font-weight: normal; margin-bottom: 10px;">Will you be my Valentine?</h2>
         
         <div class="btn-container">
-            <button class="btn btn-yes" id="yesBtn">YES 💖</button>
-            <button class="btn btn-no" id="noBtn">NO 😢</button>
+            <button class="btn btn-yes" id="yesBtn">YES! 💖</button>
+            <button class="btn btn-no" id="noBtn">No 😢</button>
         </div>
     </div>
 
-    <!-- Surprise Section -->
+    <!-- Interactive Gifts Reveal Section -->
     <div id="gifts-section">
-        <h1 style="margin-bottom: 30px;">Yay! You made me the happiest! 🥰</h1>
+        <h1 style="margin-bottom: 10px; font-size: 2rem;">Yay! I'm so happy! 🥰</h1>
+        <p style="color: #666; margin-bottom: 30px; text-align: center;">I have 3 little surprises for you. Click each box to open it!</p>
         
         <div class="gift-grid">
-            <!-- Gift 1: Poem -->
-            <div class="gift-card">
-                <h3>A Little Poem</h3>
-                <div id="poem-text"></div>
-            </div>
-
-            <!-- Gift 2: Kisses -->
-            <div class="gift-card">
-                <h3>Kisses for You</h3>
-                <p>Click below to receive my love!</p>
-                <button class="btn btn-yes" style="margin: 15px auto; padding: 8px 20px;" onclick="spawnKisses()">Send Kisses 😘</button>
-                <div id="kisses-stats" style="font-size: 0.9rem; color: #888;"></div>
-            </div>
-
-            <!-- Gift 3: Memories -->
-            <div class="gift-card">
-                <h3>Our Memories</h3>
-                <div class="slider">
-                    <div class="slides" id="slides">
-                        <!-- Replace background images with your own file paths -->
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400')"><span>Add your photo 1</span></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516589174184-c685265162fb?auto=format&fit=crop&q=80&w=400')"><span>Add your photo 2</span></div>
-                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&q=80&w=400')"><span>Add your photo 3</span></div>
+            <!-- Box 1 -->
+            <div class="gift-box-wrapper" onclick="revealGift(this, 'poem')">
+                <div class="gift-card closed">
+                    <div class="content">
+                        <h3>Our Poem</h3>
+                        <div id="poem-text"></div>
                     </div>
                 </div>
-                <p style="font-size: 0.8rem; margin-top: 10px; color: #999;">Swipe or wait for magic</p>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="gift-box-wrapper" onclick="revealGift(this, 'kisses')">
+                <div class="gift-card closed">
+                    <div class="content">
+                        <h3>Sweet Kisses</h3>
+                        <p>A million digital kisses coming your way!</p>
+                        <button class="btn btn-yes" style="margin-top: 15px; width: auto; font-size: 0.9rem;" onclick="event.stopPropagation(); spawnKisses();">Get More 💋</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Box 3 -->
+            <div class="gift-card closed" id="memory-box" onclick="revealGift(this, 'memories')">
+                <div class="content">
+                    <h3>Our Gallery</h3>
+                    <div class="slider">
+                        <div class="slides" id="slides">
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400')"></div>
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516589174184-c685265162fb?q=80&w=400')"></div>
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?q=80&w=400')"></div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #999;">Every moment with you is a gift.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="music-control" id="musicToggle">
-        🎵
-    </div>
+    <div class="music-control" id="musicToggle">🎵</div>
 
     <script>
-        // --- Configuration ---
-        const herName = "Your Name"; // Change this to her name
+        // --- CONFIGURATION ---
+        const herName = "Pretty"; // Change this!
         const poemLines = [
-            "In your smile, I find my light,",
-            "In your heart, I'm home tonight.",
-            "More than words could ever say,",
-            "I love you more each single day.",
-            "Forever yours, Happy Valentine's! ❤️"
+            "In a world full of people,",
+            "It's only you I see.",
+            "You're the sweetest person,",
+            "That's ever happened to me.",
+            "Happy Valentine's Day! ❤️"
         ];
 
-        // Replace the [Her Name] in the HTML
-        document.querySelector('h1').innerText = `Hey ${herName} ❤️`;
+        document.getElementById('valentine-title').innerText = `Hey ${herName} ❤️`;
 
-        // --- Elements ---
-        const loadingScreen = document.getElementById('loading-screen');
+        // --- DOM ELEMENTS ---
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const mainContainer = document.getElementById('main-container');
         const giftsSection = document.getElementById('gifts-section');
-        const poemText = document.getElementById('poem-text');
-        const slides = document.getElementById('slides');
-        const musicToggle = document.getElementById('musicToggle');
         const bgMusic = document.getElementById('bg-music');
-        const bgHeartsContainer = document.getElementById('bg-hearts');
+        const musicToggle = document.getElementById('musicToggle');
 
-        // --- Loading Logic ---
-        window.onload = () => {
+        // --- INITIALIZATION ---
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => loadingScreen.classList.add('hidden'), 800);
-            }, 1500);
-            startFloatingHearts();
-        };
+                document.getElementById('loading-screen').style.opacity = '0';
+                setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 800);
+            }, 1200);
+            createFloatingHearts();
+        });
 
-        // --- Background Floating Hearts ---
-        function startFloatingHearts() {
+        function createFloatingHearts() {
+            const container = document.getElementById('bg-hearts');
             setInterval(() => {
                 const heart = document.createElement('div');
-                heart.classList.add('floating-heart');
+                heart.className = 'floating-heart';
                 heart.innerHTML = '❤️';
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                heart.style.duration = (Math.random() * 3 + 4) + 's';
-                bgHeartsContainer.appendChild(heart);
-                setTimeout(() => heart.remove(), 6000);
-            }, 300);
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 8000);
+            }, 400);
         }
 
-        // --- "NO" Button Behavior (Run away) ---
+        // --- MOBILE-PERFECT NO BUTTON LOGIC ---
+        const moveButton = (e) => {
+            // Calculate random positions within the viewport
+            const padding = 50;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.style.zIndex = '1000';
+            
+            // Add a little shake effect
+            noBtn.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
+        };
+
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             moveButton();
         });
 
-        function moveButton() {
-            const padding = 20;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-            
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-            noBtn.style.zIndex = '1000';
-        }
-
-        // --- "YES" Button Logic ---
+        // --- YES BUTTON LOGIC ---
         yesBtn.addEventListener('click', () => {
-            mainContainer.classList.add('hidden');
-            giftsSection.style.display = 'flex';
-            giftsSection.classList.add('fade-in');
+            mainContainer.style.opacity = '0';
+            mainContainer.style.transform = 'scale(0.8)';
             
-            // Start effects
-            confettiBurst();
-            startPoemTyping();
-            startSlider();
-            
-            // Try playing music (browsers might block it until interaction)
-            bgMusic.play().catch(() => console.log("Music blocked by browser"));
+            setTimeout(() => {
+                mainContainer.classList.add('hidden');
+                giftsSection.style.display = 'flex';
+                giftsSection.classList.add('fade-in');
+                confettiEffect();
+                bgMusic.play().catch(() => {});
+            }, 400);
         });
 
-        // --- Gift 1: Typing Animation ---
-        let lineIndex = 0;
-        let charIndex = 0;
-        function startPoemTyping() {
-            if (lineIndex < poemLines.length) {
-                if (charIndex < poemLines[lineIndex].length) {
-                    poemText.innerHTML += poemLines[lineIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(startPoemTyping, 50);
-                } else {
-                    poemText.innerHTML += "<br>";
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(startPoemTyping, 500);
-                }
-            }
+        // --- GIFT REVEAL LOGIC ---
+        function revealGift(element, type) {
+            const card = element.classList.contains('gift-card') ? element : element.querySelector('.gift-card');
+            if (!card.classList.contains('closed')) return;
+
+            card.classList.remove('closed');
+            card.classList.add('opened');
+
+            if (type === 'poem') startPoem();
+            if (type === 'kisses') spawnKisses();
+            if (type === 'memories') startGallery();
         }
 
-        // --- Gift 2: Kisses Logic ---
-        let kissCount = 0;
+        // Gift: Poem Typing
+        function startPoem() {
+            const target = document.getElementById('poem-text');
+            let line = 0;
+            let char = 0;
+
+            function type() {
+                if (line < poemLines.length) {
+                    if (char < poemLines[line].length) {
+                        target.innerHTML += poemLines[line][char];
+                        char++;
+                        setTimeout(type, 40);
+                    } else {
+                        target.innerHTML += "<br>";
+                        line++;
+                        char = 0;
+                        setTimeout(type, 400);
+                    }
+                }
+            }
+            type();
+        }
+
+        // Gift: Kisses
         function spawnKisses() {
-            kissCount += 10;
-            document.getElementById('kisses-stats').innerText = `Sent ${kissCount} kisses!`;
-            const emojis = ['😘', '💋', '💖', '💕', '🥰', '😍'];
-            
-            for (let i = 0; i < 15; i++) {
+            const emojis = ['😘', '💋', '❤️', '💕'];
+            for (let i = 0; i < 20; i++) {
                 const kiss = document.createElement('div');
                 kiss.innerText = emojis[Math.floor(Math.random() * emojis.length)];
                 kiss.style.position = 'fixed';
-                kiss.style.left = Math.random() * 100 + 'vw';
-                kiss.style.top = '110vh';
-                kiss.style.fontSize = (Math.random() * 30 + 20) + 'px';
-                kiss.style.zIndex = '1000';
-                kiss.style.transition = 'all 2s ease-out';
+                kiss.style.left = '50vw';
+                kiss.style.top = '50vh';
+                kiss.style.fontSize = '30px';
+                kiss.style.pointerEvents = 'none';
+                kiss.style.zIndex = '1500';
                 document.body.appendChild(kiss);
 
-                setTimeout(() => {
-                    kiss.style.transform = `translate(${(Math.random() - 0.5) * 200}px, -120vh) rotate(${Math.random() * 360}deg)`;
-                    kiss.style.opacity = '0';
-                }, 50);
+                const destX = (Math.random() - 0.5) * 200;
+                const destY = (Math.random() - 0.5) * 200;
 
-                setTimeout(() => kiss.remove(), 2500);
+                kiss.animate([
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${destX}vw, ${destY}vh) scale(2) rotate(360deg)`, opacity: 0 }
+                ], {
+                    duration: 2000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                }).onfinish = () => kiss.remove();
             }
         }
 
-        // --- Gift 3: Slider Logic ---
-        let currentSlide = 0;
-        function startSlider() {
+        // Gift: Memories
+        function startGallery() {
+            const slides = document.getElementById('slides');
+            let current = 0;
             setInterval(() => {
-                currentSlide = (currentSlide + 1) % 3;
-                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+                current = (current + 1) % 3;
+                slides.style.transform = `translateX(-${current * 100}%)`;
             }, 3000);
         }
 
-        // --- Confetti ---
-        function confettiBurst() {
-            for (let i = 0; i < 50; i++) {
-                const c = document.createElement('div');
-                c.innerHTML = '❤️';
-                c.style.position = 'fixed';
-                c.style.left = '50vw';
-                c.style.top = '50vh';
-                c.style.fontSize = '20px';
-                c.style.zIndex = '999';
-                document.body.appendChild(c);
-
+        // --- CONFETTI ---
+        function confettiEffect() {
+            for(let i=0; i<30; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.style.position = 'fixed';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.zIndex = '2000';
+                document.body.appendChild(heart);
+                
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 5 + Math.random() * 10;
-                const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity;
-
-                let posX = 50;
-                let posY = 50;
-                let opacity = 1;
-
-                const move = setInterval(() => {
-                    posX += vx / 5;
-                    posY += vy / 5;
-                    opacity -= 0.02;
-                    c.style.left = posX + 'vw';
-                    c.style.top = posY + 'vh';
-                    c.style.opacity = opacity;
-
-                    if (opacity <= 0) {
-                        clearInterval(move);
-                        c.remove();
-                    }
-                }, 20);
+                const dist = 50 + Math.random() * 50;
+                
+                heart.animate([
+                    { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle)*dist}vw, ${Math.sin(angle)*dist}vh) scale(1.5)`, opacity: 0 }
+                ], { duration: 1500, easing: 'ease-out' }).onfinish = () => heart.remove();
             }
         }
 
-        // --- Music Toggle ---
+        // --- MUSIC CONTROL ---
         musicToggle.addEventListener('click', () => {
             if (bgMusic.paused) {
                 bgMusic.play();
