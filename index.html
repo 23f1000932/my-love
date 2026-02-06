@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? ❤️</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-soft: #ffb7c5;
+            --pink-deep: #ff69b4;
+            --pastel-bg: #fff0f5;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--pastel-bg);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Loading Screen --- */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease;
+        }
+
+        .heart-loader {
+            font-size: 50px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Background Animation --- */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: var(--pink-soft);
+            opacity: 0.6;
+            animation: float Up 6s linear forwards;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- Main Card --- */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+            max-width: 90%;
+            width: 500px;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--pink-deep);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .btn {
+            padding: 12px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-yes {
+            background-color: var(--pink-deep);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            background-color: #ff1493;
+        }
+
+        .btn-no {
+            background-color: #eee;
+            color: #666;
+            position: relative;
+        }
+
+        /* --- Gifts Section --- */
+        #gifts-section {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .gift-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gift-card h3 {
+            color: var(--pink-deep);
+            margin-bottom: 15px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* Poem Typing Effect */
+        #poem-text {
+            font-style: italic;
+            line-height: 1.6;
+            min-height: 100px;
+        }
+
+        /* Slider */
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-color: #fce4ec;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        /* Music Toggle */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        /* Responsive Utilities */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .container { padding: 25px; }
+            .btn { padding: 10px 25px; font-size: 1rem; }
+        }
+
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 1s forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Kisses Container */
+        #kisses-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Element (Add your mp3 link here) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Crush-Music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="loading-screen">
+        <div class="heart-loader">💖</div>
+        <p style="margin-top: 10px; color: var(--pink-deep);">Preparing something special...</p>
+    </div>
+
+    <div class="bg-hearts" id="bg-hearts"></div>
+    <div id="kisses-container"></div>
+
+    <!-- Main Section -->
+    <div class="container" id="main-container">
+        <h1>Hey [Her Name] ❤️</h1>
+        <p style="color: #666; font-size: 1.1rem;">I have a very important question to ask you...</p>
+        <h2 style="margin-top: 15px; color: var(--pink-deep); font-family: 'Pacifico';">Will you be my Valentine?</h2>
+        
+        <div class="btn-container">
+            <button class="btn btn-yes" id="yesBtn">YES 💖</button>
+            <button class="btn btn-no" id="noBtn">NO 😢</button>
+        </div>
+    </div>
+
+    <!-- Surprise Section -->
+    <div id="gifts-section">
+        <h1 style="margin-bottom: 30px;">Yay! You made me the happiest! 🥰</h1>
+        
+        <div class="gift-grid">
+            <!-- Gift 1: Poem -->
+            <div class="gift-card">
+                <h3>A Little Poem</h3>
+                <div id="poem-text"></div>
+            </div>
+
+            <!-- Gift 2: Kisses -->
+            <div class="gift-card">
+                <h3>Kisses for You</h3>
+                <p>Click below to receive my love!</p>
+                <button class="btn btn-yes" style="margin: 15px auto; padding: 8px 20px;" onclick="spawnKisses()">Send Kisses 😘</button>
+                <div id="kisses-stats" style="font-size: 0.9rem; color: #888;"></div>
+            </div>
+
+            <!-- Gift 3: Memories -->
+            <div class="gift-card">
+                <h3>Our Memories</h3>
+                <div class="slider">
+                    <div class="slides" id="slides">
+                        <!-- Replace background images with your own file paths -->
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400')"><span>Add your photo 1</span></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1516589174184-c685265162fb?auto=format&fit=crop&q=80&w=400')"><span>Add your photo 2</span></div>
+                        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&q=80&w=400')"><span>Add your photo 3</span></div>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 10px; color: #999;">Swipe or wait for magic</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="music-control" id="musicToggle">
+        🎵
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const herName = "Your Name"; // Change this to her name
+        const poemLines = [
+            "In your smile, I find my light,",
+            "In your heart, I'm home tonight.",
+            "More than words could ever say,",
+            "I love you more each single day.",
+            "Forever yours, Happy Valentine's! ❤️"
+        ];
+
+        // Replace the [Her Name] in the HTML
+        document.querySelector('h1').innerText = `Hey ${herName} ❤️`;
+
+        // --- Elements ---
+        const loadingScreen = document.getElementById('loading-screen');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainContainer = document.getElementById('main-container');
+        const giftsSection = document.getElementById('gifts-section');
+        const poemText = document.getElementById('poem-text');
+        const slides = document.getElementById('slides');
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bg-music');
+        const bgHeartsContainer = document.getElementById('bg-hearts');
+
+        // --- Loading Logic ---
+        window.onload = () => {
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => loadingScreen.classList.add('hidden'), 800);
+            }, 1500);
+            startFloatingHearts();
+        };
+
+        // --- Background Floating Hearts ---
+        function startFloatingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.duration = (Math.random() * 3 + 4) + 's';
+                bgHeartsContainer.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 300);
+        }
+
+        // --- "NO" Button Behavior (Run away) ---
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        function moveButton() {
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.zIndex = '1000';
+        }
+
+        // --- "YES" Button Logic ---
+        yesBtn.addEventListener('click', () => {
+            mainContainer.classList.add('hidden');
+            giftsSection.style.display = 'flex';
+            giftsSection.classList.add('fade-in');
+            
+            // Start effects
+            confettiBurst();
+            startPoemTyping();
+            startSlider();
+            
+            // Try playing music (browsers might block it until interaction)
+            bgMusic.play().catch(() => console.log("Music blocked by browser"));
+        });
+
+        // --- Gift 1: Typing Animation ---
+        let lineIndex = 0;
+        let charIndex = 0;
+        function startPoemTyping() {
+            if (lineIndex < poemLines.length) {
+                if (charIndex < poemLines[lineIndex].length) {
+                    poemText.innerHTML += poemLines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(startPoemTyping, 50);
+                } else {
+                    poemText.innerHTML += "<br>";
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(startPoemTyping, 500);
+                }
+            }
+        }
+
+        // --- Gift 2: Kisses Logic ---
+        let kissCount = 0;
+        function spawnKisses() {
+            kissCount += 10;
+            document.getElementById('kisses-stats').innerText = `Sent ${kissCount} kisses!`;
+            const emojis = ['😘', '💋', '💖', '💕', '🥰', '😍'];
+            
+            for (let i = 0; i < 15; i++) {
+                const kiss = document.createElement('div');
+                kiss.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                kiss.style.position = 'fixed';
+                kiss.style.left = Math.random() * 100 + 'vw';
+                kiss.style.top = '110vh';
+                kiss.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                kiss.style.zIndex = '1000';
+                kiss.style.transition = 'all 2s ease-out';
+                document.body.appendChild(kiss);
+
+                setTimeout(() => {
+                    kiss.style.transform = `translate(${(Math.random() - 0.5) * 200}px, -120vh) rotate(${Math.random() * 360}deg)`;
+                    kiss.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => kiss.remove(), 2500);
+            }
+        }
+
+        // --- Gift 3: Slider Logic ---
+        let currentSlide = 0;
+        function startSlider() {
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % 3;
+                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            }, 3000);
+        }
+
+        // --- Confetti ---
+        function confettiBurst() {
+            for (let i = 0; i < 50; i++) {
+                const c = document.createElement('div');
+                c.innerHTML = '❤️';
+                c.style.position = 'fixed';
+                c.style.left = '50vw';
+                c.style.top = '50vh';
+                c.style.fontSize = '20px';
+                c.style.zIndex = '999';
+                document.body.appendChild(c);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 5 + Math.random() * 10;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+
+                let posX = 50;
+                let posY = 50;
+                let opacity = 1;
+
+                const move = setInterval(() => {
+                    posX += vx / 5;
+                    posY += vy / 5;
+                    opacity -= 0.02;
+                    c.style.left = posX + 'vw';
+                    c.style.top = posY + 'vh';
+                    c.style.opacity = opacity;
+
+                    if (opacity <= 0) {
+                        clearInterval(move);
+                        c.remove();
+                    }
+                }, 20);
+            }
+        }
+
+        // --- Music Toggle ---
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicToggle.innerText = '🎵';
+            } else {
+                bgMusic.pause();
+                musicToggle.innerText = '🔇';
+            }
+        });
+    </script>
+</body>
+</html>
