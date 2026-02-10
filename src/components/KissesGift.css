@@ -1,0 +1,54 @@
+.kisses-card {
+  background: linear-gradient(135deg, rgba(255, 179, 198, 0.95) 0%, rgba(255, 143, 171, 0.95) 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.kisses-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.kiss-emoji {
+  position: absolute;
+  bottom: -50px;
+  animation: floatUpPop linear forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes floatUpPop {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-350px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .kisses-container {
+    height: 250px;
+  }
+  
+  .kiss-emoji {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .kisses-container {
+    height: 200px;
+  }
+}

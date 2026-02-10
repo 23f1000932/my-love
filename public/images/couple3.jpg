@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="meadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#957DAD;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E0BBE4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#meadow)"/>
+  
+  <!-- Flowers -->
+  <circle cx="150" cy="500" r="10" fill="#FF8FAB" opacity="0.8"/>
+  <circle cx="200" cy="520" r="8" fill="#FFB3C6" opacity="0.8"/>
+  <circle cx="600" cy="510" r="9" fill="#FF8FAB" opacity="0.8"/>
+  <circle cx="650" cy="530" r="11" fill="#FFB3C6" opacity="0.8"/>
+  <circle cx="250" cy="530" r="7" fill="#FF8FAB" opacity="0.8"/>
+  
+  <!-- Picnic blanket -->
+  <rect x="300" y="400" width="200" height="150" fill="#FFB3C6" opacity="0.6"/>
+  
+  <!-- Couple on picnic -->
+  <ellipse cx="370" cy="460" rx="30" ry="45" fill="#4A4A4A" opacity="0.7"/>
+  <ellipse cx="430" cy="460" rx="30" ry="45" fill="#4A4A4A" opacity="0.7"/>
+  <circle cx="370" cy="420" r="22" fill="#4A4A4A" opacity="0.7"/>
+  <circle cx="430" cy="420" r="22" fill="#4A4A4A" opacity="0.7"/>
+  
+  <!-- Heart -->
+  <text x="400" y="250" font-size="64" fill="#FF8FAB" text-anchor="middle" opacity="0.7">💝</text>
+  
+  <!-- Text -->
+  <text x="400" y="100" font-family="Arial" font-size="32" fill="white" text-anchor="middle" opacity="0.8">Couple Memory 3</text>
+  <text x="400" y="140" font-family="Arial" font-size="20" fill="white" text-anchor="middle" opacity="0.6">Replace with your photo</text>
+</svg>

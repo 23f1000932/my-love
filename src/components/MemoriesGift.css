@@ -1,0 +1,72 @@
+.memories-card {
+  background: linear-gradient(135deg, rgba(224, 187, 228, 0.95) 0%, rgba(149, 125, 173, 0.95) 100%);
+}
+
+.carousel-container {
+  padding: var(--spacing-sm);
+  border-radius: 15px;
+  overflow: hidden;
+  background: white;
+}
+
+.carousel-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+.carousel-image {
+  max-height: 400px;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Customize carousel controls */
+.carousel .control-dots {
+  margin-bottom: 10px;
+}
+
+.carousel .control-dots .dot {
+  background: var(--color-blush);
+  box-shadow: none;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.carousel .control-dots .dot.selected {
+  opacity: 1;
+}
+
+.carousel .control-arrow {
+  background: rgba(255, 143, 171, 0.8);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.carousel .control-arrow:hover {
+  background: rgba(255, 143, 171, 1);
+  opacity: 1;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .carousel-image {
+    max-height: 300px;
+  }
+  
+  .carousel .control-arrow {
+    display: none; /* Hide arrows on mobile, swipe only */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-image {
+    max-height: 250px;
+  }
+  
+  .carousel-container {
+    padding: var(--spacing-xs);
+  }
+}

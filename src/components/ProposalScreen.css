@@ -1,0 +1,146 @@
+.proposal-screen {
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+.proposal-content {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: var(--spacing-xl);
+    box-shadow: 0 20px 60px rgba(255, 179, 198, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.proposal-title {
+    font-family: var(--font-romantic);
+    color: var(--color-blush);
+    margin-bottom: var(--spacing-md);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.proposal-question {
+    font-size: clamp(1.125rem, 4vw, 1.5rem);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xl);
+    font-weight: 400;
+    animation: fadeInUp 1s ease-out;
+}
+
+.buttons-container {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    min-height: 80px;
+}
+
+/* YES Button */
+.yes-button {
+    background: linear-gradient(135deg, #FF8FAB 0%, #FFB3C6 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 143, 171, 0.4);
+    transition: all 0.3s ease;
+    font-family: var(--font-primary);
+    min-width: 140px;
+    min-height: 60px;
+    touch-action: manipulation;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.yes-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 143, 171, 0.6);
+}
+
+.yes-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* NO Button */
+.no-button {
+    background: linear-gradient(135deg, #E0BBE4 0%, #957DAD 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(224, 187, 228, 0.4);
+    transition: all 0.3s ease;
+    font-family: var(--font-primary);
+    min-width: 140px;
+    min-height: 60px;
+    touch-action: manipulation;
+    animation: fadeInUp 1.4s ease-out;
+}
+
+.no-button.moving {
+    position: fixed;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.no-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(224, 187, 228, 0.6);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    .proposal-content {
+        padding: var(--spacing-lg);
+        border-radius: 20px;
+    }
+
+    .yes-button,
+    .no-button {
+        padding: 0.875rem 2rem;
+        font-size: 1.125rem;
+        min-width: 130px;
+        min-height: 56px;
+    }
+
+    .buttons-container {
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Ensure buttons are always tappable on mobile */
+@media (hover: none) and (pointer: coarse) {
+
+    .yes-button,
+    .no-button {
+        min-width: 150px;
+        min-height: 60px;
+    }
+}

@@ -1,0 +1,42 @@
+.poem-card {
+  background: linear-gradient(135deg, rgba(255, 229, 236, 0.95) 0%, rgba(224, 187, 228, 0.95) 100%);
+}
+
+.poem-content {
+  padding: var(--spacing-md);
+  min-height: 200px;
+}
+
+.poem-text {
+  font-family: var(--font-romantic);
+  font-size: clamp(1rem, 3.5vw, 1.375rem);
+  line-height: 1.8;
+  color: var(--color-text);
+  white-space: pre-wrap;
+  text-align: center;
+}
+
+.typing-cursor {
+  color: var(--color-blush);
+  font-weight: bold;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .poem-content {
+    padding: var(--spacing-sm);
+  }
+  
+  .poem-text {
+    font-size: 1.125rem;
+  }
+}
