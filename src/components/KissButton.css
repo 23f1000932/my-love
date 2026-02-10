@@ -1,0 +1,109 @@
+.kiss-button-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.kiss-area {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fff0f5 0%, #ffe5ec 100%);
+  border-radius: 16px;
+}
+
+.kiss-message {
+  font-size: 1.1rem;
+  color: var(--color-purple);
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.kiss-trigger-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FF8FAB 50%, #FFB3C6 100%);
+  color: white;
+  border: none;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 60px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+  transition: all 0.3s ease;
+  font-family: var(--font-primary);
+  touch-action: manipulation;
+  position: relative;
+  z-index: 10;
+}
+
+.kiss-trigger-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(255, 107, 157, 0.6);
+}
+
+.kiss-trigger-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+}
+
+.kiss-count {
+  font-size: 0.95rem;
+  color: var(--color-blush);
+  font-weight: 600;
+  animation: popIn 0.3s ease-out;
+}
+
+/* Falling kiss animation */
+.falling-kiss {
+  position: absolute;
+  top: -10%;
+  animation: fallDown ease-in forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes fallDown {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(10px) rotate(20deg) scale(1);
+  }
+  100% {
+    transform: translateY(300px) rotate(360deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .kiss-area {
+    min-height: 240px;
+    padding: 1rem;
+  }
+  
+  .kiss-trigger-btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+}

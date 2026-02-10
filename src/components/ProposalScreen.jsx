@@ -3,10 +3,21 @@ import Confetti from 'react-confetti'
 import './ProposalScreen.css'
 
 function ProposalScreen({ onYesClick, showConfetti }) {
-  const [noButtonPosition, setNoButtonPosition] = useState({ top: 'auto', left: 'auto' })
-  const [noButtonMoved, setNoButtonMoved] = useState(false)
+  const [noClickCount, setNoClickCount] = useState(0)
+  const [yesSize, setYesSize] = useState(1)
 
   const girlfriendName = "Beautiful" // CUSTOMIZE THIS
+
+  // Progressive funny text changes for No button
+  const noButtonTexts = [
+    "NO 😢",
+    "really? 🥺",
+    "think once again 💭",
+    "i will give u kitkat 🍫",
+    "okay... 5 star? 🌟",
+    "bro please 😭😭",
+    "i'm not asking, i'm telling 😤",
+  ]
 
   // Get window dimensions for confetti
   const [windowDimensions, setWindowDimensions] = useState({
@@ -26,30 +37,13 @@ function ProposalScreen({ onYesClick, showConfetti }) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const moveNoButton = () => {
-    setNoButtonMoved(true)
-    
-    // Get viewport dimensions
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
-    
-    // Button dimensions (approximate)
-    const buttonWidth = 150
-    const buttonHeight = 60
-    
-    // Calculate safe boundaries (with padding)
-    const padding = 20
-    const maxLeft = viewportWidth - buttonWidth - padding
-    const maxTop = viewportHeight - buttonHeight - padding
-    
-    // Generate random position within safe boundaries
-    const randomLeft = Math.max(padding, Math.random() * maxLeft)
-    const randomTop = Math.max(padding, Math.random() * maxTop)
-    
-    setNoButtonPosition({
-      left: `${randomLeft}px`,
-      top: `${randomTop}px`
-    })
+  const handleNoClick = () => {
+    // Progress to next text, loop back to last one if exhausted
+    if (noClickCount < noButtonTexts.length - 1) {
+      setNoClickCount(prev => prev + 1)
+    }
+    // Make YES button grow with each No click
+    setYesSize(prev => Math.min(prev + 0.15, 2))
   }
 
   return (
@@ -76,21 +70,16 @@ function ProposalScreen({ onYesClick, showConfetti }) {
           <button 
             className="yes-button"
             onClick={onYesClick}
+            style={{ transform: `scale(${yesSize})` }}
           >
             YES 💖
           </button>
           
           <button 
-            className={`no-button ${noButtonMoved ? 'moving' : ''}`}
-            style={noButtonMoved ? noButtonPosition : {}}
-            onMouseEnter={moveNoButton}
-            onTouchStart={moveNoButton}
-            onClick={(e) => {
-              e.preventDefault()
-              moveNoButton()
-            }}
+            className="no-button"
+            onClick={handleNoClick}
           >
-            NO 😢
+            {noButtonTexts[noClickCount]}
           </button>
         </div>
       </div>

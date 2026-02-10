@@ -1,42 +1,67 @@
 .poem-card {
-  background: linear-gradient(135deg, rgba(255, 229, 236, 0.95) 0%, rgba(224, 187, 228, 0.95) 100%);
+  position: relative;
+    overflow: hidden;
 }
 
 .poem-content {
-  padding: var(--spacing-md);
-  min-height: 200px;
+  padding: 1.5rem;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe5ec 100%);
+    border-radius: 16px;
+    position: relative;
 }
 
 .poem-text {
   font-family: var(--font-romantic);
-  font-size: clamp(1rem, 3.5vw, 1.375rem);
-  line-height: 1.8;
-  color: var(--color-text);
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+    color: var(--color-purple);
+    line-height: 2;
   white-space: pre-wrap;
   text-align: center;
 }
 
 .typing-cursor {
+  display: inline-block;
+    animation: blink 0.7s infinite;
   color: var(--color-blush);
   font-weight: bold;
-  animation: blink 0.7s infinite;
+}
+
+.poem-credit {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: var(--color-blush);
+  font-size: 0.95rem;
+  animation: fadeIn 1s ease-out;
 }
 
 @keyframes blink {
-  0%, 50% {
-    opacity: 1;
+  0%,
+    50% {
+      opacity: 1;
+    }
+  
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
-  51%, 100% {
+@keyframes fadeIn {
+  from {
     opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .poem-content {
-    padding: var(--spacing-sm);
+    padding: 1rem;
   }
   
   .poem-text {
-    font-size: 1.125rem;
+    line-height: 1.8;
   }
 }

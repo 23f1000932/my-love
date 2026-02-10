@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import './GiftsSection.css'
 import PoemGift from './PoemGift'
-import KissesGift from './KissesGift'
+import KissButton from './KissButton'
+import SurpriseGift from './SurpriseGift'
 import MemoriesGift from './MemoriesGift'
 
 function GiftsSection() {
@@ -9,11 +10,10 @@ function GiftsSection() {
   const [showGifts, setShowGifts] = useState(false)
 
   useEffect(() => {
-    // Show success message for 2 seconds, then show gifts
     const timer = setTimeout(() => {
       setShowSuccess(false)
       setShowGifts(true)
-    }, 2000)
+    }, 2500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -30,7 +30,8 @@ function GiftsSection() {
       {showGifts && (
         <div className="gifts-container">
           <PoemGift />
-          <KissesGift />
+          <KissButton />
+          <SurpriseGift />
           <MemoriesGift />
         </div>
       )}

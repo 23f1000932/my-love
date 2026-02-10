@@ -5,20 +5,20 @@ function PoemGift() {
   const [displayedText, setDisplayedText] = useState('')
   const [isTyping, setIsTyping] = useState(true)
   
-  // CUSTOMIZE YOUR POEM HERE
-  const poem = `In every heartbeat, you're there,
-A love beyond compare.
-Your smile lights up my darkest days,
-In countless beautiful ways.
+  // Sweet Bollywood love song lyrics
+  const poem = `Tum hi ho, ab tum hi ho,
+Zindagi ab tum hi ho,
+Chain bhi, mera dard bhi,
+Meri aashiqui tum hi ho...
 
-With you, my world is bright,
-You make everything feel right.
-Forever and always, you'll see,
-You mean the world to me. 💕`
+Tu hi hai, tera hi hai,
+Yeh jahan yeh zameen,
+Tere bina sab sunna hai,
+Tu meri dhoop hai, tu meri chhaon hai 💕`
 
   useEffect(() => {
     let currentIndex = 0
-    const typingSpeed = 50 // milliseconds per character
+    const typingSpeed = 50
 
     const typeNextCharacter = () => {
       if (currentIndex < poem.length) {
@@ -37,13 +37,16 @@ You mean the world to me. 💕`
   return (
     <div className="gift-card poem-card">
       <h2 className="gift-title">
-        <span>🎁</span> A Poem For You
+        <span>🎶</span> Gift 1: A Song For You
       </h2>
       <div className="poem-content">
         <p className="poem-text">
           {displayedText}
           {isTyping && <span className="typing-cursor">|</span>}
         </p>
+        {!isTyping && (
+          <p className="poem-credit">— Tum Hi Ho (Aashiqui 2) 🎵</p>
+        )}
       </div>
     </div>
   )

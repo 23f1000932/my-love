@@ -1,41 +1,45 @@
-import { Carousel } from 'react-responsive-carousel'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import './MemoriesGift.css'
 
 function MemoriesGift() {
   // CUSTOMIZE: Add your photo paths here
-  const photos = [
-    '/images/couple1.jpg',
-    '/images/couple2.jpg',
-    '/images/couple3.jpg',
-  ]
+  // Example: const photos = ['/images/photo1.jpg', '/images/photo2.jpg']
+  const photos = []
 
   return (
     <div className="gift-card memories-card">
       <h2 className="gift-title">
         <span>📸</span> Our Beautiful Memories
       </h2>
-      <div className="carousel-container">
-        <Carousel
-          showThumbs={false}
-          infiniteLoop={true}
-          autoPlay={true}
-          interval={3000}
-          showStatus={false}
-          swipeable={true}
-          emulateTouch={true}
-          dynamicHeight={false}
-        >
-          {photos.map((photo, index) => (
-            <div key={index} className="carousel-slide">
-              <img 
-                src={photo} 
-                alt={`Memory ${index + 1}`}
-                className="carousel-image"
-              />
+      <div className="memories-content">
+        {photos.length > 0 ? (
+          <div className="photos-grid">
+            {photos.map((photo, index) => (
+              <div key={index} className="photo-item">
+                <img
+                  src={photo}
+                  alt={`Memory ${index + 1}`}
+                  className="memory-photo"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="photo-placeholder">
+            <div className="placeholder-icon">📷</div>
+            <h3>Add Your Special Moments Here!</h3>
+            <p className="placeholder-text">
+              Replace this section with your favorite photos together.
+              <br />
+              Add photo paths to the <code>photos</code> array in <code>MemoriesGift.jsx</code>
+            </p>
+            <div className="placeholder-examples">
+              <div className="example-photo">🌅</div>
+              <div className="example-photo">💑</div>
+              <div className="example-photo">🎉</div>
+              <div className="example-photo">💕</div>
             </div>
-          ))}
-        </Carousel>
+          </div>
+        )}
       </div>
     </div>
   )

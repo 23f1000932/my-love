@@ -55,7 +55,7 @@
     border-radius: 50px;
     cursor: pointer;
     box-shadow: 0 10px 30px rgba(255, 143, 171, 0.4);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     font-family: var(--font-primary);
     min-width: 140px;
     min-height: 60px;
@@ -64,15 +64,15 @@
 }
 
 .yes-button:hover {
-    transform: translateY(-3px) scale(1.05);
     box-shadow: 0 15px 40px rgba(255, 143, 171, 0.6);
+    filter: brightness(1.1);
 }
 
 .yes-button:active {
-    transform: translateY(-1px) scale(1.02);
+    filter: brightness(0.95);
 }
 
-/* NO Button */
+/* NO Button - stays in place */
 .no-button {
     background: linear-gradient(135deg, #E0BBE4 0%, #957DAD 100%);
     color: white;
@@ -91,17 +91,38 @@
     animation: fadeInUp 1.4s ease-out;
 }
 
-.no-button.moving {
-    position: fixed;
-    z-index: 1000;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
 .no-button:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 15px 40px rgba(224, 187, 228, 0.6);
 }
 
+.no-button:active {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-8px);
+    }
+
+    40% {
+        transform: translateX(8px);
+    }
+
+    60% {
+        transform: translateX(-5px);
+    }
+
+    80% {
+        transform: translateX(5px);
+    }
+}
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -135,9 +156,7 @@
     }
 }
 
-/* Ensure buttons are always tappable on mobile */
 @media (hover: none) and (pointer: coarse) {
-
     .yes-button,
     .no-button {
         min-width: 150px;

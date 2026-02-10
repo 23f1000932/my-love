@@ -1,0 +1,38 @@
+.scroll-kisses-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.scroll-kiss {
+  position: absolute;
+  font-size: 2rem;
+  animation: scrollKissFade 2s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes scrollKissFade {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1) rotate(10deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.5) rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-kiss {
+    font-size: 1.5rem;
+  }
+}
