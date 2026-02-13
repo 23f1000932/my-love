@@ -6,7 +6,7 @@ function ProposalScreen({ onYesClick, showConfetti }) {
   const [noClickCount, setNoClickCount] = useState(0)
   const [yesSize, setYesSize] = useState(1)
 
-  const girlfriendName = "Beautiful" // CUSTOMIZE THIS
+  const girlfriendName = "Dua" // CUSTOMIZE THIS
 
   // Progressive funny text changes for No button
   const noButtonTexts = [

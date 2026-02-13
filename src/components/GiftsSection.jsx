@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './GiftsSection.css'
 import PoemGift from './PoemGift'
 import KissButton from './KissButton'
-import SurpriseGift from './SurpriseGift'
+
 import MemoriesGift from './MemoriesGift'
 
 function GiftsSection() {
@@ -31,7 +31,6 @@ function GiftsSection() {
         <div className="gifts-container">
           <PoemGift />
           <KissButton />
-          <SurpriseGift />
           <MemoriesGift />
         </div>
       )}
