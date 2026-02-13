@@ -1,9 +1,13 @@
 import './MemoriesGift.css'
 
 function MemoriesGift() {
-  // CUSTOMIZE: Add your photo paths here
-  // Example: const photos = ['/images/photo1.jpg', '/images/photo2.jpg']
-  const photos = []
+  const photos = [
+    '/images/WhatsApp Image 2026-02-14 at 00.17.jpeg',
+    '/images/WhatsApp Image 2026-02-14 at 00.17.5.jpeg',
+    '/images/WhatsApp Image 2026-02-14 at 00.17.57.jpeg',
+    '/images/WhatsApp Image 2026-02-14 at 00.17.58.jpeg',
+    '/images/WhatsApp Image 2026-02-14 at 00.19.52.jpeg',
+  ]
 
   return (
     <div className="gift-card memories-card">

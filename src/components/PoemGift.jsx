@@ -9,12 +9,7 @@ function PoemGift() {
   const poem = `Tum hi ho, ab tum hi ho,
 Zindagi ab tum hi ho,
 Chain bhi, mera dard bhi,
-Meri aashiqui tum hi ho...
-
-Tu hi hai, tera hi hai,
-Yeh jahan yeh zameen,
-Tere bina sab sunna hai,
-Tu meri dhoop hai, tu meri chhaon hai 💕`
+Meri aashiqui tum hi ho... 💕`
 
   useEffect(() => {
     let currentIndex = 0
